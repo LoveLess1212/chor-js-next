@@ -21,7 +21,8 @@
     "bundle": "node bundler.js",
     "prepublishOnly": "npm run bundle",
     "visualTest": "node ./test/testBundler.js",
-    "build": "vite build"
+    "build": "vite build",
+    "distro": "node tasks/build-distro.mjs"
   },
   "author": {
     "name": "Jan Ladleif",
@@ -44,12 +45,20 @@
     "last 2 Baidu versions"
   ],
   "devDependencies": {
+    "@babel/core": "^8.0.0",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-replace": "^6.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "bpmn-font": "^0.12.1",
+    "chai": "^6.2.2",
+    "chai-match": "^1.1.1",
+    "cpy": "^13.2.2",
+    "del": "^8.0.1",
     "eslint": "^9.39.4",
     "eslint-plugin-bpmn-io": "^2.3.1",
-    "puppeteer": "^3.3.0",
-    "rollup": "^4.61.1",
-    "rollup-plugin-license": "^3.7.1",
-    "source-map-support": "^0.5.19",
+    "execa": "^9.6.1",
     "karma": "^6.4.4",
     "karma-chrome-launcher-2": "^3.3.0",
     "karma-coverage": "^2.2.0",
@@ -61,7 +70,11 @@
     "karma-tldr-reporter": "^0.0.1",
     "karma-webpack": "^5.0.1",
     "mocha": "^11.0.0",
-    "mocha-test-container-support": "0.2.0"
+    "mocha-test-container-support": "0.2.0",
+    "puppeteer": "^3.3.0",
+    "rollup": "^4.61.1",
+    "rollup-plugin-license": "^3.7.1",
+    "source-map-support": "^0.5.19"
   },
   "dependencies": {
     "bpmn-js": "^18.19.0",
