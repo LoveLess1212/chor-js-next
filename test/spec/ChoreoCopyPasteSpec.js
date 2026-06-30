@@ -27,13 +27,14 @@ describe('features/copy-paste', function() {
 
         // when
         const SUB_CHOREO_ID = 'SubChoreography_1lywprj';
-        const tree = copy([SUB_CHOREO_ID]);
+        const tree = copy([ SUB_CHOREO_ID ]);
         const subChoreo = tree.getElement(SUB_CHOREO_ID);
 
-        const ids = ['SubChoreography_1lywprj', 'ChoreographyTask_093vv4x', 'StartEvent_0vgi8b6', 'EndEvent_1gmyy45',
+        const ids = [ 'SubChoreography_1lywprj', 'ChoreographyTask_093vv4x', 'StartEvent_0vgi8b6', 'EndEvent_1gmyy45',
           'Participant_1_SubChoreography_1lywprj', 'Participant_2_SubChoreography_1lywprj', 'SequenceFlow_102fgpm',
           'SequenceFlow_0jv4yjf', 'StartEvent_0vgi8b6_label', 'EndEvent_1gmyy45_label',
-          'Participant_1_ChoreographyTask_093vv4x', 'Participant_2_ChoreographyTask_093vv4x', 'Message_0bkq11l'];
+          'Participant_1_ChoreographyTask_093vv4x', 'Participant_2_ChoreographyTask_093vv4x', 'Message_0bkq11l' ];
+
         // then
         expect(Object.keys(tree._tree).length).to.equal(8); // Participants and Messages are not copied
         expect(tree.getHeight()).to.equal(2); // nesting depth is two as participants and messages do not count
@@ -42,7 +43,7 @@ describe('features/copy-paste', function() {
           'Participant_2_ChoreographyTask_093vv4x',
           'Message_0bkq11l',
           'Participant_1_SubChoreography_1lywprj',
-          'Participant_2_SubChoreography_1lywprj'].findIndex(x => x === id) === -1));
+          'Participant_2_SubChoreography_1lywprj' ].findIndex(x => x === id) === -1));
 
         expect(subChoreo.isExpanded).to.be.true;
       }));
@@ -53,8 +54,9 @@ describe('features/copy-paste', function() {
 
         // given
         var event = elementRegistry.get(START_EVENT_ID);
+
         // when
-        var tree = copy([event]);
+        var tree = copy([ event ]);
 
         var eventDescriptor = tree.getElement(START_EVENT_ID);
 
@@ -66,9 +68,11 @@ describe('features/copy-paste', function() {
       }));
 
     });
+
     describe('paste', function() {
       it('should paste twice', inject(
         function(elementRegistry, canvas, copyPaste) {
+
           // given
           const element = elementRegistry.get('SubChoreography_1lywprj');
           const rootElement = canvas.getRootElement();
@@ -110,6 +114,7 @@ describe('features/copy-paste', function() {
 
       it('should keep participants but chang bands', inject(
         function(elementRegistry, canvas, copyPaste) {
+
           // given
           const element = elementRegistry.get('ChoreographyTask_1jjb8x4');
           const rootElement = canvas.getRootElement();
@@ -128,6 +133,7 @@ describe('features/copy-paste', function() {
           var pastedElement = elementRegistry.filter(function(e) {
             return e !== element && is(e, 'bpmn:ChoreographyTask') && e.businessObject.name === 'Activity';
           })[0];
+
           // eql = deep equal
           expect(pastedElement.businessObject.particpantRef).to.eql(element.businessObject.particpantRef);
           expect(pastedElement.businessObject.initiatingParticipantRef).to.equal(element.businessObject.initiatingParticipantRef);
@@ -145,6 +151,7 @@ describe('features/copy-paste', function() {
 
       it('should create new message flow', inject(
         function(elementRegistry, canvas, copyPaste) {
+
           // given
           const element = elementRegistry.get('ChoreographyTask_1jjb8x4');
           const rootElement = canvas.getRootElement();
@@ -163,6 +170,7 @@ describe('features/copy-paste', function() {
           var pastedElement = elementRegistry.filter(function(e) {
             return e !== element && is(e, 'bpmn:ChoreographyTask') && e.businessObject.name === 'Activity';
           })[0];
+
           // eql = deep equal
           expect(pastedElement.businessObject.messageFlowRef).to.not.eql(element.businessObject.messageFlowRef);
           expect(pastedElement.businessObject.messageFlowRef[0].$parent).to.equal(element.businessObject.messageFlowRef[0].$parent);
@@ -176,7 +184,7 @@ describe('features/copy-paste', function() {
         }
       ));
 
-      it('should undo and redo', inject(integrationTest(['ChoreographyTask_1jjb8x4'])));
+      it('should undo and redo', inject(integrationTest([ 'ChoreographyTask_1jjb8x4' ])));
     });
 
   });
@@ -188,6 +196,7 @@ describe('features/copy-paste', function() {
 function integrationTest(ids) {
 
   return function(canvas, elementRegistry, modeling, copyPaste, commandStack) {
+
     // given
     var shapes = elementRegistry.getAll();
     let rootElement;
@@ -267,9 +276,11 @@ function integrationTest(ids) {
         return is(element, 'bpmn:Message');
       }).length
     };
+
     // then
     // Some sequence flows might have been deleted
     const sequenceFlowDiff = initialContext.sequenceFlowLenght - currentContext.sequenceFlowLenght;
+
     // Due to some unintended behaviour some messages where part of
     expect(currentContext).to.have.length(initialContext.length - sequenceFlowDiff);
 

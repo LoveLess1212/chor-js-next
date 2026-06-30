@@ -30,6 +30,7 @@ export default function DescriptorTree(tree) {
 DescriptorTree.prototype.getHeight = function() {
   return this._length;
 };
+
 /**
  * Get element by Id
  * @param id

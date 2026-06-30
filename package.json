@@ -11,17 +11,23 @@
     "toolkit",
     "bpmn"
   ],
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "sideEffects":[
+    "*.css"
+  ],
   "scripts": {
     "lint": "eslint .",
-    "test": "karma start",
+    "eslint:fix": "eslint --fix .",
+    "test": "karma start test/config/karma.unit.js",
     "bundle": "node bundler.js",
     "prepublishOnly": "npm run bundle",
     "visualTest": "node ./test/testBundler.js",
-    "build": "vite build",
     "distro": "node tasks/build-distro.mjs"
   },
   "author": {
@@ -74,6 +80,8 @@
     "puppeteer": "^3.3.0",
     "rollup": "^4.61.1",
     "rollup-plugin-license": "^3.7.1",
+    "sinon": "^22.0.0",
+    "sinon-chai": "^4.0.1",
     "source-map-support": "^0.5.19"
   },
   "dependencies": {
@@ -81,10 +89,12 @@
     "bpmn-moddle": "^10.0.0",
     "diagram-js": "^15.18.0",
     "diagram-js-direct-editing": "^3.4.0",
+    "ids": "^3.0.2",
     "inherits": "^2.0.4",
     "inherits-browser": "^0.1.0",
     "min-dash": "^5.0.0",
     "min-dom": "^5.3.0",
-    "tiny-svg": "^4.1.4"
+    "tiny-svg": "^4.1.4",
+    "webpack": "^5.108.3"
   }
 }

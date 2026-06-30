@@ -2,8 +2,9 @@ import { bootstrapChorModeler, inject, createCanvasEvent, getBounds } from '../T
 
 import { isMac } from 'diagram-js/lib/util/Platform';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai); // eslint-disable-line no-undef
+
+// import sinonChai from 'sinon-chai';
+// chai.use(sinonChai); // eslint-disable-line no-undef
 
 describe('feature/space-tool', function() {
 
@@ -12,6 +13,7 @@ describe('feature/space-tool', function() {
   let Dragging, SpaceTool, ElementRegistry, EventBus;
 
   const injectDependencies = inject(function(dragging, spaceTool, elementRegistry, autoScroll, eventBus) {
+
     /* we inject the dependencies into the global namespace. This way we do not have to wrap every function
     with #inject allowing us nicer integration with mocha and a clearer stacktrace.
     */
@@ -25,6 +27,7 @@ describe('feature/space-tool', function() {
 
   describe('event spaceTool.move', function() {
     beforeEach(bootstrapChorModeler(oneTaskXML));
+
     beforeEach(injectDependencies);
 
     it('selects messages and bands as movable when moving a task', function() {
@@ -45,7 +48,7 @@ describe('feature/space-tool', function() {
         const context = event.context;
         if (context.initialized) {
           expect(context.movingShapes, 'Bands and Messages are not moving shapes').to.be.empty;
-          expect(context.resizingShapes, 'Only Task is resizing directly').to.have.members([getTask(ElementRegistry)]);
+          expect(context.resizingShapes, 'Only Task is resizing directly').to.have.members([ getTask(ElementRegistry) ]);
         }
       });
       EventBus.on('spaceTool.move', 1 , listener);
@@ -58,7 +61,7 @@ describe('feature/space-tool', function() {
         const context = event.context;
         if (context.initialized) {
           expect(context.movingShapes, 'No moving shapes').to.be.empty;
-          expect(context.resizingShapes, 'Only Task is resizing directly').to.have.members([getTask(ElementRegistry)]);
+          expect(context.resizingShapes, 'Only Task is resizing directly').to.have.members([ getTask(ElementRegistry) ]);
         }
       });
       EventBus.on('spaceTool.move', 1 , listener);
@@ -72,6 +75,7 @@ describe('feature/space-tool', function() {
 
   describe('task moving keeps participants and messages attached', function() {
     beforeEach(bootstrapChorModeler(oneTaskXML));
+
     beforeEach(injectDependencies);
 
     const tests = [
@@ -127,9 +131,11 @@ describe('feature/space-tool', function() {
 
   describe('task resizing keeps messages attached and resizes bands', function() {
     beforeEach(bootstrapChorModeler(bigTaskXML));
+
     beforeEach(injectDependencies);
 
     const tests = [
+
       // increasing size
       { deltaX: 100, message: 'increases size when pulling to the right' },
       { startX: 305, startY: 305, deltaX: 100, message: 'increases size when pulling on the band to the right ' },

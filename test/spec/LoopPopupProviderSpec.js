@@ -121,7 +121,7 @@ describe('loop popup provider', function() {
     inject(function(popupMenu) {
       popupMenu.open(elem, 'loop-provider', { x: 0, y: 0 });
       expect(Object.values(popupMenu._current.entries).map(x => x.loopType)).to.have.members([
-        'MultiInstanceParallel', 'MultiInstanceSequential', 'Standard']);
+        'MultiInstanceParallel', 'MultiInstanceSequential', 'Standard' ]);
       done();
     })();
   });
