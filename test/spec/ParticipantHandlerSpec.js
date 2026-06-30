@@ -1,7 +1,5 @@
 import { bootstrapChorModeler, inject } from '../TestHelper';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai); // eslint-disable-line no-undef
 
 
 describe('create participant handler', function() {
@@ -10,6 +8,7 @@ describe('create participant handler', function() {
   let Modeling, CommandStack, ChoreoUtil, ElementFactory, Canvas;
 
   const injectDependencies = inject(function(modeling, commandStack, choreoUtil, elementFactory, canvas) {
+
     /*
     we inject the dependencies into the global namespace. This way we do not have to wrap every function
     with #inject allowing us nicer integration with mocha and a clearer stacktrace.
@@ -22,6 +21,7 @@ describe('create participant handler', function() {
   });
 
   beforeEach(bootstrapChorModeler(emptyXML));
+
   beforeEach(injectDependencies);
 
   it('creates new participant', function() {

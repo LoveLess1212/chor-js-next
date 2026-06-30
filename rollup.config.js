@@ -9,7 +9,7 @@ import {
   readFileSync
 } from 'fs';
 
-import pkg from './package.json' with { type: "json" };
+import pkg from './package.json';
 
 const outputDir = 'dist';
 
@@ -44,7 +44,8 @@ const configs = distros.reduce(function(configs, distro) {
         format: 'umd'
       },
       plugins: pgl([
-        banner(output)
+
+        // banner(output)
       ], 'development')
     },
     {
@@ -55,7 +56,8 @@ const configs = distros.reduce(function(configs, distro) {
         format: 'umd'
       },
       plugins: pgl([
-        banner(output, true),
+
+        // banner(output, true),
         terser({
           output: {
             comments: /license|@preserve/
@@ -71,26 +73,26 @@ export default configs;
 
 // helpers //////////////////////
 
-function banner(bundleName, minified) {
+// function banner(bundleName, minified) {
 
-  const bannerName = (
-    minified
-      ? 'banner-min'
-      : 'banner'
-  );
+//   const bannerName = (
+//     minified
+//       ? 'banner-min'
+//       : 'banner'
+//   );
 
-  const bannerTemplate = readFileSync(`${__dirname}/resources/${bannerName}.txt`, 'utf8');
+//   const bannerTemplate = readFileSync(`${__dirname}/resources/${bannerName}.txt`, 'utf8');
 
-  const banner = processTemplate(bannerTemplate, {
-    version: pkg.version,
-    date: today(),
-    name: bundleName
-  });
+//   const banner = processTemplate(bannerTemplate, {
+//     version: pkg.version,
+//     date: today(),
+//     name: bundleName
+//   });
 
-  return license({
-    banner
-  });
-}
+//   return license({
+//     banner
+//   });
+// }
 
 function pgl(plugins = [], env = 'production') {
   return [
