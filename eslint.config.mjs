@@ -3,7 +3,9 @@ import bpmnIoPlugin from 'eslint-plugin-bpmn-io';
 const files = {
   ignored: [
     'dist',
-    'coverage'
+    'coverage',
+    'test/.*',
+    '.*'
   ],
   build: [
     'test/config/*.js',
