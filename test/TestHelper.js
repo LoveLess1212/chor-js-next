@@ -69,6 +69,7 @@ export function createEvent(target, position, data) {
   return getChorJS().invoke(function(eventBus) {
     data = assign({
       target: target,
+      button: 0,
       clientX: position.x,
       clientY: position.y,
       offsetX: position.x,

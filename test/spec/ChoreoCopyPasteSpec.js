@@ -64,7 +64,7 @@ describe('features/copy-paste', function() {
         expect(tree.getHeight()).to.equal(1);
         expect(Object.values(tree.getElementsAtDepth(0)).length).to.equal(2); // Event and label
 
-        expect(eventDescriptor.type).to.eql('bpmn:StartEvent');
+        expect(eventDescriptor.businessObject.$type).to.eql('bpmn:StartEvent');
       }));
 
     });
