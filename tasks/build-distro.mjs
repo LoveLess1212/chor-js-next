@@ -17,6 +17,15 @@ function resolve(module, sub) {
   return path.dirname(pkg) + sub;
 }
 
+function buildChorCss() {
+  const source = fs.readFileSync('assets/styles/chor-js.css', 'utf8');
+
+  return source
+    .replace("@import url('bpmn-js/dist/assets/diagram-js.css');", "@import url('./diagram-js.css');")
+    .replace("@import url('bpmn-js/dist/assets/bpmn-font/css/bpmn.css');", "@import url('./bpmn-font/css/bpmn.css');")
+    .replace("@import url('../icons/include/css/choreography.css');", "@import url('./choreography/css/choreography.css');");
+}
+
 async function run() {
 
   console.log('clean ' + dest);
@@ -32,8 +41,12 @@ async function run() {
   console.log('copy diagram-js.css to ' + dest);
   await cp(resolve('diagram-js', '/assets/**'), dest + '/assets');
 
-  console.log('copy bpmn-js.css to ' + dest);
-  await cp('./assets/*.css', dest + '/assets');
+  console.log('copy chor-js icon assets to ' + dest);
+  await cp('./assets/icons/include/css/**', dest + '/assets/choreography/css');
+  await cp('./assets/icons/include/font/**', dest + '/assets/choreography/font');
+
+  console.log('write chor-js.css to ' + dest);
+  fs.writeFileSync(path.join(dest, 'assets', 'chor-js.css'), buildChorCss());
 
   console.log('building pre-packaged distributions');
 

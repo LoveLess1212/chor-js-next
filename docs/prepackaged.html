@@ -32,18 +32,15 @@
       // Create a new instance of the modeler.
       // Use `new ChorJS.Viewer({...})` to create an instance of only the viewer components.
       let bpmnModeler = new ChorJS({
-        container: '#canvas',
-        keyboard: {
-          bindTo: document
-        }
+        container: '#canvas'
       });
 
-      // Load the XML of a BPMN choreography model.
-      let diagramUrl = 'https://cdn.jsdelivr.net/gh/bptlab/chor-js@latest/docs/sample.bpmn';
-      fetch(diagramUrl).then(response => response.text()).then(async xml => {
-        // Display the model.
-        await bpmnModeler.importXML(xml);
-      });
+      // // Load the XML of a BPMN choreography model.
+      // let diagramUrl = 'https://cdn.jsdelivr.net/gh/bptlab/chor-js@latest/docs/sample.bpmn';
+      // fetch(diagramUrl).then(response => response.text()).then(async xml => {
+      //   // Display the model.
+      //   await bpmnModeler.importXML(xml);
+      // });
     </script>
   </body>
 </html>

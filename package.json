@@ -25,7 +25,8 @@
     "lint": "eslint .",
     "eslint:fix": "eslint --fix .",
     "test": "karma start test/config/karma.unit.js",
-    "bundle": "node bundler.js",
+    "demo:local": "node scripts/serve-demo.mjs",
+    "bundle": "npm run distro",
     "prepublishOnly": "npm run bundle",
     "visualTest": "node ./test/testBundler.js",
     "distro": "node tasks/build-distro.mjs"

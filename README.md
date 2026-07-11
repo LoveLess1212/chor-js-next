@@ -60,15 +60,14 @@ const xml; // your BPMN2 choreography XML
 
 // Setup modeler
 const modeler = new ChorJS({
-  container: '#canvas',
-  keyboard: {
-    bindTo: document
-  }
+  container: '#canvas'
 });
 
 // Load model (optionally with a specific diagram ID)
 await modeler.importXML(xml, '_choreo1');
 ```
+
+Keyboard binding is handled implicitly by the underlying diagram library now, so you should not pass `keyboard.bindTo`.
 
 ## Further Documentation
 
