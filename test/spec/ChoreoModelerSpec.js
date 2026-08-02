@@ -41,6 +41,16 @@ describe('choreo modeler', function() {
       });
     });
 
+    it('should return import warnings', function() {
+      const modeler = new ChoreoModeler({
+        container: container
+      });
+
+      return modeler.importXML(choreoWithLoops).then(result => {
+        expect(result.warnings).to.eql([]);
+      });
+    });
+
     it('should have correct task names', function(done) {
       createModeler(choreoWithMultiplicities).then(modeler => {
         const elemReg = modeler.get('elementRegistry');

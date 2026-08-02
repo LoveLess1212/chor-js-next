@@ -11,3 +11,4 @@ _site
 .karma-parcel-cache
 test/.test-cache
 test/.test-bin
+.copilot
