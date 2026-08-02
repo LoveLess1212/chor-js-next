@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+  Local demo for running chor-js from this repository.
+  Build the bundle first with `npm run bundle`, then run `npm run demo:local`
+  and open http://localhost:8080/docs/local-prepackaged.html.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>chor-js local prepackaged</title>
+
+    <link rel="stylesheet" href="../dist/assets/chor-js.css">
+    <script src="../dist/bpmn-modeler.development.js"></script>
+
+    <style>
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+      }
+
+      #canvas {
+        flex: 1;
+        min-height: 0;
+      }
+
+      .toolbar {
+        align-items: center;
+        background: #1f2937;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+
+      .toolbar button,
+      .toolbar label {
+        background: #ffffff;
+        border: 0;
+        border-radius: 4px;
+        color: #111827;
+        cursor: pointer;
+        font: inherit;
+        padding: 6px 10px;
+      }
+
+      .toolbar button:hover,
+      .toolbar label:hover {
+        background: #e5e7eb;
+      }
+
+      .toolbar input {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas"></div>
+
+    <div class="toolbar">
+      <label for="open-file">Open existing file</label>
+      <input id="open-file" type="file" accept=".bpmn,.xml">
+      <button type="button" id="save-bpmn">Save BPMN</button>
+      <button type="button" id="save-svg">Save SVG</button>
+    </div>
+
+    <script>
+      const ChorJS = window.BpmnJS;
+
+      const bpmnModeler = new ChorJS({
+        container: '#canvas'
+      });
+
+      const diagramUrl = './sample.bpmn';
+
+      fetch(diagramUrl)
+        .then(response => response.text())
+        .then(async xml => {
+          await bpmnModeler.importXML(xml);
+        })
+        .catch(error => {
+          console.error('Failed to load local sample BPMN:', error);
+        });
+
+      const openFile = document.getElementById('open-file');
+      const saveBpmn = document.getElementById('save-bpmn');
+      const saveSvg = document.getElementById('save-svg');
+
+      function download(filename, contents, type) {
+        const blob = new Blob([ contents ], { type });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+
+        link.href = url;
+        link.download = filename;
+        link.click();
+
+        URL.revokeObjectURL(url);
+      }
+
+      openFile.addEventListener('change', event => {
+        const file = event.target.files[0];
+
+        if (!file) {
+          return;
+        }
+
+        const reader = new FileReader();
+
+        reader.addEventListener('load', async () => {
+          try {
+            await bpmnModeler.importXML(reader.result);
+          } catch (error) {
+            console.error('Failed to open BPMN file:', error);
+          }
+        });
+
+        reader.readAsText(file);
+        event.target.value = '';
+      });
+
+      saveBpmn.addEventListener('click', async () => {
+        try {
+          const { xml } = await bpmnModeler.saveXML({ format: true });
+
+          download('diagram.bpmn', xml, 'application/xml');
+        } catch (error) {
+          console.error('Failed to save BPMN:', error);
+        }
+      });
+
+      saveSvg.addEventListener('click', async () => {
+        try {
+          const { svg } = await bpmnModeler.saveSVG();
+
+          download('diagram.svg', svg, 'image/svg+xml');
+        } catch (error) {
+          console.error('Failed to save SVG:', error);
+        }
+      });
+    </script>
+  </body>
+</html>

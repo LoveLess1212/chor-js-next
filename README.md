@@ -37,6 +37,8 @@ Just include the pre-packaged code in your webpage:
 
 You can find a sample webpage [here](./docs/prepackaged.html).
 
+For a local checkout, run `npm run bundle`, then `npm run demo:local`, and open [http://localhost:8080/docs/local-prepackaged.html](http://localhost:8080/docs/local-prepackaged.html).
+
 ### b) NPM
 
 Install the package via `npm install chor-js` and import chor-js in your application:
